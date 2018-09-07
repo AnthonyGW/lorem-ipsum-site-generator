@@ -1,5 +1,5 @@
 # lorem-ipsum-site-generator
-Lorem Ipsum website generator made with Node.js
+Lorem Ipsum generator website made with Node.js
 
 ### Instructions for setup
 1. Install Node.js on your machine from [here](https://nodejs.org/en/download/)
