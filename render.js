@@ -11,6 +11,22 @@ const regexPatterns = {
   words: /\w*[^\ ]/g
 };
 
+// Generate additional paragraphs, sentences and words
+const extraLorem = (reqLength, loremContent) => {
+  let newLoremContent = loremContent;
+  
+  // Get the number of sections to add
+  let difference = reqLength - newLoremContent.length;
+
+  if(difference > 0){
+    for(let i = 0; i < difference; i += 1){
+      // Append a random previous section to the array
+      newLoremContent.push(loremContent[Math.floor(Math.random() * loremContent.length)]);
+    }
+  }
+  return newLoremContent;
+};
+
 // Extract paragraphs, sentences and words from a string
 const getLorem = (type, number, file) => {
   return file
@@ -21,6 +37,7 @@ const getLorem = (type, number, file) => {
 const getSmallLorem = params => {
   let loremContent = getLorem("paragraphs", 5, loremFile);
   loremContent = getLorem(params.type, params.number, loremContent.toString());
+  loremContent = extraLorem(params.number, loremContent);
   loremContent = loremContent.join(" ");
   return loremContent;
 };
@@ -33,7 +50,9 @@ const renderLorem = (params) => {
   if(parseInt(params.number) !== 0){
     switch(params.type){
       case "paragraphs":
-        loremContent = getLorem(params.type, parseInt(params.number), loremFile);
+        const reqLength = parseInt(params.number);
+        loremContent = getLorem(params.type, reqLength, loremFile);
+        loremContent = extraLorem(reqLength, loremContent);
         loremContent = loremContent.join("<br /><br />");
         break;
       case "sentences":
